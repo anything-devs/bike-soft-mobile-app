@@ -1,4 +1,4 @@
-import 'package:bike_soft_mobile_app/screens/productos_screen.dart';
+import 'package:bike_soft_mobile_app/screens/pantalla_productos.dart';
 import 'package:flutter/material.dart';
 
 void main() {
