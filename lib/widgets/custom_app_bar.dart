@@ -28,10 +28,10 @@ class CustomAppBarr extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         Padding(
-          padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
+          padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
           child: IconButton(
-            icon: Icon(Icons.search) ,
-            color: Color(0xffffffff),
+            icon: const Icon(Icons.search) ,
+            color: const  Color(0xffffffff),
             iconSize: 24,
             onPressed: () {
               showSearch(context: context, delegate: BusquedaProducto());

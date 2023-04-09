@@ -1,5 +1,6 @@
 import 'package:bike_soft_mobile_app/screens/pantalla_productos.dart';
 import 'package:bike_soft_mobile_app/screens/pantalla_acualizar_cantidad.dart';
+import 'package:bike_soft_mobile_app/screens/pantalla_acualizar_producto.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/':(context) => const ProductsScreen(),
         '/actualizarProductos':(context) => const ActProductsScreen(),
+        '/actualizarProducto':(context) => const ActProductScreen(),
       },
     );
   }
