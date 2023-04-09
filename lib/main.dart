@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       theme: theme.copyWith(
           colorScheme:
               theme.colorScheme.copyWith(secondary: Colors.red.shade500)),
+
       initialRoute: '/',
       routes: {
         '/':(context) => const ProductsScreen(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bike_soft_mobile_app/delegate/delegate_busqueda_producto.dart';
 
+
 class CustomAppBarr extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBarr({super.key, this.titulo = ''});
 
