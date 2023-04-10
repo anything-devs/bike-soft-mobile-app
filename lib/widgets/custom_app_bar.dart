@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:bike_soft_mobile_app/delegate/delegate_busqueda_producto.dart';
+
 
 class CustomAppBarr extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBarr({super.key, this.titulo = ''});
@@ -8,6 +10,9 @@ class CustomAppBarr extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      iconTheme: const IconThemeData(
+        color:  Colors.white,
+      ),
       centerTitle: true,
       backgroundColor: const Color(0xff2a2b30),
       shape: const RoundedRectangleBorder(
@@ -22,21 +27,16 @@ class CustomAppBarr extends StatelessWidget implements PreferredSizeWidget {
             fontSize: 19,
             color: Colors.white),
       ),
-      leading: const Padding(
-        padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
-        child: Icon(
-          Icons.menu,
-          color: Color(0xffffffff),
-          size: 24,
-        ),
-      ),
-      actions: const [
+      actions: [
         Padding(
-          padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
-          child: Icon(
-            Icons.search,
-            color: Color(0xffffffff),
-            size: 24,
+          padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
+          child: IconButton(
+            icon: const Icon(Icons.search) ,
+            color: const  Color(0xffffffff),
+            iconSize: 24,
+            onPressed: () {
+              showSearch(context: context, delegate: BusquedaProducto());
+            },
           ),
         ),
       ],

@@ -1,4 +1,5 @@
 import 'package:bike_soft_mobile_app/widgets/custom_app_bar.dart';
+import 'package:bike_soft_mobile_app/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 
 const List<String> list = <String>["A-Z", "Z-A", "Bajas unidades"];
@@ -16,6 +17,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBarr(titulo: "Productos"),
+      drawer: const CustomDrawer(),
       body: ListView(
         children: [
           Padding(
