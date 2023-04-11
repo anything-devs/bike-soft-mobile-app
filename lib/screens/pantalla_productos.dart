@@ -15,7 +15,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBarr(titulo: "Productos"),
+        appBar: const CustomAppBarr(titulo: "Productos", iconoBuscar: true),
         drawer: const CustomDrawer(),
         body: Column(
           children: [
