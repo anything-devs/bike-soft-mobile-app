@@ -18,12 +18,11 @@ class MyApp extends StatelessWidget {
       theme: theme.copyWith(
           colorScheme:
               theme.colorScheme.copyWith(secondary: Colors.red.shade500)),
-
       initialRoute: '/',
       routes: {
-        '/':(context) => const ProductsScreen(),
-        '/actualizarProductos':(context) => const ActProductsScreen(),
-        '/actualizarProducto':(context) => const ActProductScreen(),
+        '/': (context) => const PantallaProductos(),
+        '/actualizarProductos': (context) => const ActProductsScreen(),
+        '/actualizarProducto': (context) => const ActProductScreen(),
       },
     );
   }

@@ -1,50 +1,77 @@
 import 'package:bike_soft_mobile_app/widgets/custom_app_bar.dart';
 import 'package:bike_soft_mobile_app/widgets/custom_drawer.dart';
+import 'package:bike_soft_mobile_app/screens/pantalla_agregar_producto.dart';
 import 'package:flutter/material.dart';
 
-class ProductsScreen extends StatefulWidget {
-  const ProductsScreen({super.key});
+class PantallaProductos extends StatefulWidget {
+  const PantallaProductos({super.key});
 
   @override
-  State<ProductsScreen> createState() => _ProductsScreenState();
+  State<PantallaProductos> createState() => _PantallaProductosState();
 }
 
-class _ProductsScreenState extends State<ProductsScreen> {
+class _PantallaProductosState extends State<PantallaProductos> {
   final List<String> list = <String>["A-Z", "Z-A", "Bajas unidades"];
   String dropDownValue = 'A-Z';
+
+  // Esto es el test para la lista
+  final List<String> items = ['Item 1', 'Item 2', 'Item 3'];
+
+  void _agregarItem(String newItem) {
+    setState(() {
+      items.add(newItem);
+    });
+  }
+
+  Future<void> _mostrarPantallaAgregar() async {
+    String nuevoItem = await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => const PantallaAgregarProducto()));
+
+    _agregarItem(nuevoItem);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBarr(titulo: "Productos", iconoBuscar: true),
-        drawer: const CustomDrawer(),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [valueItems()],
-              ),
+      appBar: const CustomAppBarr(titulo: "Productos", iconoBuscar: true),
+      drawer: const CustomDrawer(),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [valueItems()],
             ),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: const CircleAvatar(
-                        backgroundImage: NetworkImage(
-                          "https://media.istockphoto.com/id/1344641306/es/foto/bicicleta-de-grava-profesional-o-bicicleta-de-carretera-aislada-sobre-fondo-blanco.jpg?s=612x612&w=is&k=20&c=_7cFRa-IpRlhsO7ilAtmf_NWcdaJGSXKgl3dmdss7Ek=",
-                        ),
+          ),
+          Expanded(
+            child: ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: const CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        "https://media.istockphoto.com/id/1344641306/es/foto/bicicleta-de-grava-profesional-o-bicicleta-de-carretera-aislada-sobre-fondo-blanco.jpg?s=612x612&w=is&k=20&c=_7cFRa-IpRlhsO7ilAtmf_NWcdaJGSXKgl3dmdss7Ek=",
                       ),
-                      title: Text('Item $index'),
-                      subtitle: Text('Item bueno $index'),
-                    );
-                  }),
-            )
-          ],
-        ));
+                    ),
+                    title: Text(items[index]),
+                    subtitle: Text(items[index]),
+                  );
+                }),
+          )
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _mostrarPantallaAgregar();
+        },
+        child: const Icon(Icons.add),
+      ),
+    );
   }
 
   Container valueItems() {
