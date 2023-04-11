@@ -2,9 +2,6 @@ import 'package:bike_soft_mobile_app/widgets/custom_app_bar.dart';
 import 'package:bike_soft_mobile_app/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 
-const List<String> list = <String>["A-Z", "Z-A", "Bajas unidades"];
-String dropDownValue = list.first;
-
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
 
@@ -13,26 +10,41 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
+  final List<String> list = <String>["A-Z", "Z-A", "Bajas unidades"];
+  String dropDownValue = 'A-Z';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBarr(titulo: "Productos"),
-      drawer: const CustomDrawer(),
-      body: ListView(
-        children: [
-          Padding(
+        appBar: const CustomAppBarr(titulo: "Productos"),
+        drawer: const CustomDrawer(),
+        body: Column(
+          children: [
+            Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [valueItems()],
-              )),
-
-          //Aca van el resto de cosas
-        ],
-      ),
-    );
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      leading: const CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          "https://media.istockphoto.com/id/1344641306/es/foto/bicicleta-de-grava-profesional-o-bicicleta-de-carretera-aislada-sobre-fondo-blanco.jpg?s=612x612&w=is&k=20&c=_7cFRa-IpRlhsO7ilAtmf_NWcdaJGSXKgl3dmdss7Ek=",
+                        ),
+                      ),
+                      title: Text('Item $index'),
+                      subtitle: Text('Item bueno $index'),
+                    );
+                  }),
+            )
+          ],
+        ));
   }
 
   Container valueItems() {
