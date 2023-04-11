@@ -24,13 +24,13 @@ class _PantallaProductosState extends State<PantallaProductos> {
   }
 
   Future<void> _mostrarPantallaAgregar() async {
-    String nuevoItem = await Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => const PantallaAgregarProducto()));
-
-    _agregarItem(nuevoItem);
+    final nuevoItem = await Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => const PantallaAgregarProducto()));
+    if (nuevoItem != null) {
+      _agregarItem(nuevoItem);
+    }
   }
+  // hasta aca va los del test para listas
 
   @override
   Widget build(BuildContext context) {
