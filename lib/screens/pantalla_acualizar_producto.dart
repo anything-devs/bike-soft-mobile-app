@@ -19,7 +19,10 @@ class _ActProductScreenState extends State<ActProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBarr(titulo: "Actualizar Producto"),
+      appBar: const CustomAppBarr(
+        titulo: "Actualizar Producto",
+        iconoBuscar: false,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
         child: Form(
@@ -38,14 +41,15 @@ class _ActProductScreenState extends State<ActProductScreen> {
             TextFormField(
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                  labelText: 'Cantidad',
-                  prefixIcon: Icon(Icons.numbers_rounded),
-                  ),
-                  
+                labelText: 'Cantidad',
+                prefixIcon: Icon(Icons.numbers_rounded),
+              ),
             ),
             DropdownButtonFormField(
               value: categoriaSelect,
-              items: categorias.map((e) { return DropdownMenuItem(value: e, child: Text(e));}).toList(),
+              items: categorias.map((e) {
+                return DropdownMenuItem(value: e, child: Text(e));
+              }).toList(),
               onChanged: (String? value) {
                 setState(() {
                   categoriaSelect = value!;
@@ -54,12 +58,11 @@ class _ActProductScreenState extends State<ActProductScreen> {
               icon: const Icon(
                 Icons.arrow_drop_down_circle_outlined,
                 color: Colors.red,
-                ),
+              ),
               decoration: const InputDecoration(
                 labelText: 'Categoria',
                 prefixIcon: Icon(Icons.category_rounded),
-              ) ,
-
+              ),
             ),
           ]),
         ),

@@ -13,7 +13,10 @@ class _ActProductsScreenState extends State<ActProductsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBarr(titulo: "Actualizar Productos"),
+      appBar: const CustomAppBarr(
+        titulo: "Actualizar Productos",
+        iconoBuscar: false,
+      ),
       drawer: const CustomDrawer(),
       body: ListView(
         children: [
@@ -30,19 +33,14 @@ class _ActProductsScreenState extends State<ActProductsScreen> {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.red.shade400,
         hoverColor: Colors.red.shade300,
-        icon: const Icon(Icons.add_business_outlined ,
-        color: Colors.white ),
-        label: const Text("Actualizar Stock",
-        style: TextStyle(
-            fontSize: 15,
-            color: Colors.white),),
-        onPressed: () => {
-          Navigator.pushNamed(context, '/actualizarProducto')
-        },
-      ) ,
+        icon: const Icon(Icons.add_business_outlined, color: Colors.white),
+        label: const Text(
+          "Actualizar Stock",
+          style: TextStyle(fontSize: 15, color: Colors.white),
+        ),
+        onPressed: () => {Navigator.pushNamed(context, '/actualizarProducto')},
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
-
-  
 }
