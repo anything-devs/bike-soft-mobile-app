@@ -22,11 +22,11 @@ class _PantallaProductosState extends State<PantallaProductos> {
   @override
   void initState() {
     super.initState();
-    _getProductos();
+    _getProductos('productos-AZ');
   }
 
-  Future<void> _getProductos() async {
-    final productos = await _controladorProducto.getProductos();
+  Future<void> _getProductos(String filtro) async {
+    final productos = await _controladorProducto.getProductos(filtro);
     setState(() {
       _productos = productos;
     });
@@ -103,8 +103,10 @@ class _PantallaProductosState extends State<PantallaProductos> {
               _dropDownValue = filtro!;
               if (_dropDownValue == 'Bajas unidades') {
                 _getProductosBajasUnidades();
+              } else if (_dropDownValue == 'Z-A') {
+                _getProductos('productos-ZA');
               } else {
-                _getProductos();
+                _getProductos('productos-AZ');
               }
             });
           },
