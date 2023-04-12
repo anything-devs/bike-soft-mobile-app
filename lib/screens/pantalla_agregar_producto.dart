@@ -30,7 +30,9 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                         icon: const Icon(Icons.arrow_back_ios)),
                     const Text(
                       "Agregar producto",

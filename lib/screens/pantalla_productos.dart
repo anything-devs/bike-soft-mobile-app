@@ -2,7 +2,6 @@ import 'package:bike_soft_mobile_app/controllers/controlador_productos.dart';
 import 'package:bike_soft_mobile_app/models/producto.dart';
 import 'package:bike_soft_mobile_app/widgets/custom_app_bar.dart';
 import 'package:bike_soft_mobile_app/widgets/custom_drawer.dart';
-import 'package:bike_soft_mobile_app/screens/pantalla_agregar_producto.dart';
 import 'package:flutter/material.dart';
 
 class PantallaProductos extends StatefulWidget {
@@ -15,7 +14,7 @@ class PantallaProductos extends StatefulWidget {
 class _PantallaProductosState extends State<PantallaProductos> {
   // Datos que se usan en lista productos.
   final List<String> list = <String>["A-Z", "Z-A", "Bajas unidades"];
-  String dropDownValue = 'A-Z';
+  String _dropDownValue = 'A-Z';
 
   final ControladorProductos _controladorProducto = ControladorProductos();
   List<Producto> _productos = [];
@@ -28,6 +27,13 @@ class _PantallaProductosState extends State<PantallaProductos> {
 
   Future<void> _getProductos() async {
     final productos = await _controladorProducto.getProductos();
+    setState(() {
+      _productos = productos;
+    });
+  }
+
+  Future<void> _getProductosBajasUnidades() async {
+    final productos = await _controladorProducto.getProductosBajasUnidades();
     setState(() {
       _productos = productos;
     });
@@ -46,7 +52,7 @@ class _PantallaProductosState extends State<PantallaProductos> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
-              children: [valueItems()],
+              children: [dropDownValues()],
             ),
           ),
           Expanded(
@@ -62,8 +68,8 @@ class _PantallaProductosState extends State<PantallaProductos> {
                     ),
                     title: Text(
                       producto.nombre,
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w600, fontSize: 18),
                     ),
                     subtitle: Text(producto.precioVenta.toString()),
                     trailing: Text(producto.cantidad.toString()),
@@ -81,7 +87,7 @@ class _PantallaProductosState extends State<PantallaProductos> {
     );
   }
 
-  Container valueItems() {
+  Container dropDownValues() {
     return Container(
         width: 180,
         height: 40,
@@ -91,10 +97,15 @@ class _PantallaProductosState extends State<PantallaProductos> {
             borderRadius: BorderRadius.circular(10)),
         child: DropdownButtonHideUnderline(
             child: DropdownButton(
-          value: dropDownValue,
-          onChanged: (String? value) {
+          value: _dropDownValue,
+          onChanged: (filtro) {
             setState(() {
-              dropDownValue = value!;
+              _dropDownValue = filtro!;
+              if (_dropDownValue == 'Bajas unidades') {
+                _getProductosBajasUnidades();
+              } else {
+                _getProductos();
+              }
             });
           },
           items: list.map<DropdownMenuItem<String>>((String value) {
