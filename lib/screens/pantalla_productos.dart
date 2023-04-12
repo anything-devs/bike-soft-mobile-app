@@ -28,6 +28,8 @@ class _PantallaProductosState extends State<PantallaProductos> {
   }
 
   Future<void> _getProductos(String filtro) async {
+    _cargando = true;
+    _productos = [];
     await Future.delayed(const Duration(seconds: 2));
     final productos = await _controladorProducto.getProductos(filtro);
     setState(() {
@@ -37,6 +39,9 @@ class _PantallaProductosState extends State<PantallaProductos> {
   }
 
   Future<void> _getProductosBajasUnidades() async {
+    _cargando = true;
+    _productos = [];
+    await Future.delayed(const Duration(seconds: 2));
     final productos = await _controladorProducto.getProductosBajasUnidades();
     setState(() {
       _productos = productos;
