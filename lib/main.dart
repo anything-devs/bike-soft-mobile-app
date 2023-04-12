@@ -1,3 +1,4 @@
+import 'package:bike_soft_mobile_app/screens/pantalla_agregar_producto.dart';
 import 'package:bike_soft_mobile_app/screens/pantalla_productos.dart';
 import 'package:bike_soft_mobile_app/screens/pantalla_acualizar_cantidad.dart';
 import 'package:bike_soft_mobile_app/screens/pantalla_acualizar_producto.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const PantallaProductos(),
         '/actualizarProductos': (context) => const ActProductsScreen(),
         '/actualizarProducto': (context) => const ActProductScreen(),
+        '/agregarProducto': (context) => const PantallaAgregarProducto()
       },
     );
   }

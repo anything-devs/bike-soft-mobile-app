@@ -1,3 +1,5 @@
+import 'package:bike_soft_mobile_app/controllers/controlador_productos.dart';
+import 'package:bike_soft_mobile_app/models/producto.dart';
 import 'package:bike_soft_mobile_app/widgets/custom_app_bar.dart';
 import 'package:bike_soft_mobile_app/widgets/custom_drawer.dart';
 import 'package:bike_soft_mobile_app/screens/pantalla_agregar_producto.dart';
@@ -11,17 +13,25 @@ class PantallaProductos extends StatefulWidget {
 }
 
 class _PantallaProductosState extends State<PantallaProductos> {
+  // Datos que se usan en lista productos.
   final List<String> list = <String>["A-Z", "Z-A", "Bajas unidades"];
   String dropDownValue = 'A-Z';
 
-  // Esto es el test para la lista
-  final List<String> items = ['Item 1', 'Item 2', 'Item 3'];
+  final ControladorProductos _controladorProducto = ControladorProductos();
+  List<Producto> _productos = [];
 
-  Future<void> _mostrarPantallaAgregar() async {
-    await Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const PantallaAgregarProducto()));
+  @override
+  void initState() {
+    super.initState();
+    _getProductos();
   }
-  // hasta aca va los del test para listas
+
+  Future<void> _getProductos() async {
+    final productos = await _controladorProducto.getProductos();
+    setState(() {
+      _productos = productos;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,16 +51,22 @@ class _PantallaProductosState extends State<PantallaProductos> {
           ),
           Expanded(
             child: ListView.builder(
-                itemCount: items.length,
+                itemCount: _productos.length,
                 itemBuilder: (context, index) {
+                  final producto = _productos[index];
                   return ListTile(
                     leading: const CircleAvatar(
                       backgroundImage: NetworkImage(
                         "https://media.istockphoto.com/id/1344641306/es/foto/bicicleta-de-grava-profesional-o-bicicleta-de-carretera-aislada-sobre-fondo-blanco.jpg?s=612x612&w=is&k=20&c=_7cFRa-IpRlhsO7ilAtmf_NWcdaJGSXKgl3dmdss7Ek=",
                       ),
                     ),
-                    title: Text(items[index]),
-                    subtitle: Text(items[index]),
+                    title: Text(
+                      producto.nombre,
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                    ),
+                    subtitle: Text(producto.precioVenta.toString()),
+                    trailing: Text(producto.cantidad.toString()),
                   );
                 }),
           )
@@ -58,7 +74,7 @@ class _PantallaProductosState extends State<PantallaProductos> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _mostrarPantallaAgregar();
+          Navigator.pushNamed(context, '/agregarProducto');
         },
         child: const Icon(Icons.add),
       ),

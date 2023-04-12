@@ -1,13 +1,11 @@
-import 'dart:ffi';
-
 class Producto {
   final int id;
   final String codigo;
   final String nombre;
-  final Float precioBase;
-  final Float? precioVenta;
-  final Uint16 cantidad;
-  final Uint8 cantidadMinima;
+  final double precioBase;
+  final double precioVenta;
+  final int cantidad;
+  final int? cantidadMinima;
 
   Producto(
       {required this.id,
@@ -16,15 +14,15 @@ class Producto {
       required this.precioBase,
       required this.precioVenta,
       required this.cantidad,
-      required this.cantidadMinima});
+      this.cantidadMinima});
 
   factory Producto.fromJson(Map<String, dynamic> json) {
     return Producto(
         id: json['ID'],
         codigo: json['codigo'],
         nombre: json['nombre'],
-        precioBase: json['precio_base'],
-        precioVenta: json['precio_venta'],
+        precioBase: double.parse(json['precio_base'].toString()),
+        precioVenta: double.parse(json['precio_venta'].toString()),
         cantidad: json['cantidad'],
         cantidadMinima: json['cantidad_minima']);
   }
