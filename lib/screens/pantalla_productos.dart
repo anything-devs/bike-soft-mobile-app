@@ -15,9 +15,11 @@ class _PantallaProductosState extends State<PantallaProductos> {
   // Datos que se usan en lista productos.
   final List<String> list = <String>["A-Z", "Z-A", "Bajas unidades"];
   String _dropDownValue = 'A-Z';
-
+  // Datos almacenados traidos por una peticion a backend
   final ControladorProductos _controladorProducto = ControladorProductos();
   List<Producto> _productos = [];
+  // Control de cargo
+  bool _cargando = true;
 
   @override
   void initState() {
@@ -26,9 +28,11 @@ class _PantallaProductosState extends State<PantallaProductos> {
   }
 
   Future<void> _getProductos(String filtro) async {
+    await Future.delayed(const Duration(seconds: 2));
     final productos = await _controladorProducto.getProductos(filtro);
     setState(() {
       _productos = productos;
+      _cargando = false;
     });
   }
 
@@ -36,7 +40,16 @@ class _PantallaProductosState extends State<PantallaProductos> {
     final productos = await _controladorProducto.getProductosBajasUnidades();
     setState(() {
       _productos = productos;
+      _cargando = false;
     });
+  }
+
+  Widget _cargandoProductos() {
+    return Expanded(
+        child: Container(
+      alignment: Alignment.center,
+      child: const CircularProgressIndicator(),
+    ));
   }
 
   @override
@@ -55,27 +68,8 @@ class _PantallaProductosState extends State<PantallaProductos> {
               children: [dropDownValues()],
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-                itemCount: _productos.length,
-                itemBuilder: (context, index) {
-                  final producto = _productos[index];
-                  return ListTile(
-                    leading: const CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        "https://media.istockphoto.com/id/1344641306/es/foto/bicicleta-de-grava-profesional-o-bicicleta-de-carretera-aislada-sobre-fondo-blanco.jpg?s=612x612&w=is&k=20&c=_7cFRa-IpRlhsO7ilAtmf_NWcdaJGSXKgl3dmdss7Ek=",
-                      ),
-                    ),
-                    title: Text(
-                      producto.nombre,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w600, fontSize: 18),
-                    ),
-                    subtitle: Text(producto.precioVenta.toString()),
-                    trailing: Text(producto.cantidad.toString()),
-                  );
-                }),
-          )
+          if (_cargando) _cargandoProductos(),
+          _listViewProductos()
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -85,6 +79,29 @@ class _PantallaProductosState extends State<PantallaProductos> {
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  Widget _listViewProductos() {
+    return Expanded(
+        child: ListView.builder(
+            itemCount: _productos.length,
+            itemBuilder: (context, index) {
+              final producto = _productos[index];
+              return ListTile(
+                leading: const CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    "https://media.istockphoto.com/id/1344641306/es/foto/bicicleta-de-grava-profesional-o-bicicleta-de-carretera-aislada-sobre-fondo-blanco.jpg?s=612x612&w=is&k=20&c=_7cFRa-IpRlhsO7ilAtmf_NWcdaJGSXKgl3dmdss7Ek=",
+                  ),
+                ),
+                title: Text(
+                  producto.nombre,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w600, fontSize: 18),
+                ),
+                subtitle: Text(producto.precioVenta.toString()),
+                trailing: Text(producto.cantidad.toString()),
+              );
+            }));
   }
 
   Container dropDownValues() {
