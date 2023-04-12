@@ -1,9 +1,6 @@
-
 import 'package:flutter/material.dart';
 
-
-class BusquedaProducto extends SearchDelegate{
-
+class BusquedaProducto extends SearchDelegate {
   @override
   String get searchFieldLabel => 'ID o nombre del producto';
 
@@ -11,9 +8,8 @@ class BusquedaProducto extends SearchDelegate{
   List<Widget>? buildActions(BuildContext context) {
     return [
       IconButton(
-            icon: Icon(Icons.manage_search_sharp),
-            onPressed: () {
-            },
+        icon: const Icon(Icons.manage_search_sharp),
+        onPressed: () {},
       ),
     ];
   }
@@ -21,20 +17,19 @@ class BusquedaProducto extends SearchDelegate{
   @override
   Widget? buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.arrow_back_ios),
+      icon: const Icon(Icons.arrow_back_ios),
       onPressed: () => Navigator.pop(context),
     );
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    return Text("Conectese a la BD primero");
+    return const Text("Conectese a la BD primero");
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Text("");
+    return const Text("");
     //sugerencias de busqeuda
   }
-
 }

@@ -17,18 +17,9 @@ class _PantallaProductosState extends State<PantallaProductos> {
   // Esto es el test para la lista
   final List<String> items = ['Item 1', 'Item 2', 'Item 3'];
 
-  void _agregarItem(String newItem) {
-    setState(() {
-      items.add(newItem);
-    });
-  }
-
   Future<void> _mostrarPantallaAgregar() async {
-    final nuevoItem = await Navigator.of(context).push(MaterialPageRoute(
+    await Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => const PantallaAgregarProducto()));
-    if (nuevoItem != null) {
-      _agregarItem(nuevoItem);
-    }
   }
   // hasta aca va los del test para listas
 
