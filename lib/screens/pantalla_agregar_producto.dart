@@ -9,7 +9,7 @@ class PantallaAgregarProducto extends StatefulWidget {
 }
 
 class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
-  final _controladorTexto = TextEditingController();
+  //final _controladorTexto = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -19,22 +19,78 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
       },
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextField(
-                controller: _controladorTexto,
-                decoration: const InputDecoration(labelText: 'Nuevo Elemento'),
+            children: <Widget>[
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.arrow_back_ios)),
+                    const Text(
+                      "Agregar producto",
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(
-                height: 16.0,
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Nombre del producto'),
+                ),
               ),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(_controladorTexto.text);
-                  },
-                  child: const Text('Agregar'))
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(), labelText: "Precio base"),
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+              Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                          child: TextFormField(
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Ingrese cantidad"),
+                        keyboardType: TextInputType.number,
+                      )),
+                      const SizedBox(width: 50.0),
+                      Expanded(
+                          child: TextFormField(
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Ingrese cantidad"),
+                        keyboardType: TextInputType.number,
+                      )),
+                    ],
+                  )),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 50, 20, 10),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Colors.red.shade500)),
+                  child: const Text("Agregar"),
+                ),
+              )
             ],
           ),
         ),
