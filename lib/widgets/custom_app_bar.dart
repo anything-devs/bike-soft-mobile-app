@@ -1,3 +1,4 @@
+import 'package:bike_soft_mobile_app/models/producto.dart';
 import 'package:flutter/material.dart';
 import 'package:bike_soft_mobile_app/delegate/delegate_busqueda_producto.dart';
 
@@ -34,8 +35,11 @@ class CustomAppBarr extends StatelessWidget implements PreferredSizeWidget {
               icon: const Icon(Icons.search),
               color: const Color(0xffffffff),
               iconSize: 24,
-              onPressed: () {
-                showSearch(context: context, delegate: BusquedaProducto());
+              onPressed: () async {
+                final productoSeleccionado = await showSearch(
+                      context: context,
+                      delegate: BusquedaProducto()
+                      );
               },
             ),
           ),

@@ -29,7 +29,7 @@ class CustomDrawer extends StatelessWidget  {
                 expandedAlignment: Alignment.bottomLeft,
                 children: [
                   ListTile(
-                    title: const Text('Buscar Productos'),
+                    title: const Text('Productos'),
                     onTap: () => {
                       Navigator.pushNamed(context, '/'),
                     },
