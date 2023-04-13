@@ -60,7 +60,7 @@ class _PantallaProductosState extends State<PantallaProductos> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBarr(titulo: "Productos", iconoBuscar: true),
+      appBar: const CustomAppBarr(titulo: "Productos", iconoBuscar: false),
       drawer: const CustomDrawer(),
       body: Column(
         children: [

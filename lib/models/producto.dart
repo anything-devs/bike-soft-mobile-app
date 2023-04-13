@@ -4,7 +4,7 @@ class Producto {
   final String nombre;
   final double precioBase;
   final double precioVenta;
-  final int cantidad;
+   int cantidad;
   final int? cantidadMinima;
 
   Producto(
