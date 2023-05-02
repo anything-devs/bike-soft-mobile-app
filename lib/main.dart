@@ -2,9 +2,13 @@ import 'package:bike_soft_mobile_app/screens/pantalla_agregar_producto.dart';
 import 'package:bike_soft_mobile_app/screens/pantalla_productos.dart';
 import 'package:bike_soft_mobile_app/screens/pantalla_acualizar_cantidad.dart';
 import 'package:bike_soft_mobile_app/screens/pantalla_acualizar_producto.dart';
+import 'package:bike_soft_mobile_app/service/servicio_notificacion.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  // Inicializa las ejecuciones antes de usar el runApp
+  WidgetsFlutterBinding.ensureInitialized();
+  await initNotification();
   runApp(MyApp());
 }
 
