@@ -1,4 +1,5 @@
 import 'package:bike_soft_mobile_app/models/producto.dart';
+import 'package:bike_soft_mobile_app/service/servicio_notificacion.dart';
 import 'package:flutter/material.dart';
 import 'package:bike_soft_mobile_app/delegate/delegate_busqueda_producto.dart';
 
@@ -37,12 +38,23 @@ class CustomAppBarr extends StatelessWidget implements PreferredSizeWidget {
               iconSize: 24,
               onPressed: () async {
                 final productoSeleccionado = await showSearch(
-                      context: context,
-                      delegate: BusquedaProducto()
-                      );
+                    context: context, delegate: BusquedaProducto());
               },
             ),
           ),
+        //Este es el boton para probar las notificaciones.
+        Padding(
+          padding: const EdgeInsets.fromLTRB(10, 0, 50, 0),
+          child: IconButton(
+            icon: const Icon(Icons.add_alert_outlined),
+            color: const Color(0xffffffff),
+            iconSize: 24,
+            onPressed: () {
+              mostrarNotificacion("😱 Te estas quedando sin productos",
+                  "Recuerda revisar las unidades de tus productos para que no te quedes sin disponiblidad 😉");
+            },
+          ),
+        )
       ],
     );
   }
