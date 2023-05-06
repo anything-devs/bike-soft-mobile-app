@@ -103,8 +103,15 @@ class _PantallaProductosState extends State<PantallaProductos> {
                   style: const TextStyle(
                       fontWeight: FontWeight.w600, fontSize: 18),
                 ),
-                subtitle: Text(producto.precioVenta.toString()),
-                trailing: Text(producto.cantidad.toString()),
+                subtitle: Text("Cantidad : ${producto.cantidad.toString()}      Precio : ${producto.precioVenta.toString()} "),
+                trailing: IconButton(
+                  icon: const Icon(Icons.delete_forever_outlined),
+                  onPressed: () => {
+                    setState(() {
+                      
+                    })
+                  },
+                ),
               );
             }));
   }
