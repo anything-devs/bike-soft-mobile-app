@@ -68,8 +68,8 @@ class _ActProductScreenState extends State<ActProductScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Colors.red.shade400,
-        hoverColor: Colors.red.shade300,
+        backgroundColor: Colors.red.shade500,
+        hoverColor: Colors.red.shade400,
         icon: const Icon(Icons.save, color: Colors.white),
         label: const Text(
           "Guardar",
