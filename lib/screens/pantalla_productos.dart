@@ -2,6 +2,7 @@ import 'package:bike_soft_mobile_app/controllers/controlador_productos.dart';
 import 'package:bike_soft_mobile_app/models/producto.dart';
 import 'package:bike_soft_mobile_app/widgets/custom_app_bar.dart';
 import 'package:bike_soft_mobile_app/widgets/custom_drawer.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PantallaProductos extends StatefulWidget {
@@ -74,19 +75,22 @@ class _PantallaProductosState extends State<PantallaProductos> {
             ),
           ),
           if (_cargando) _cargandoProductos(),
-          _listViewProductos()
+          _listViewProductos(context)
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, '/agregarProducto');
         },
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add, 
+          color: Colors.white,
+          ),
       ),
     );
   }
 
-  Widget _listViewProductos() {
+  Widget _listViewProductos(context) {
     return Expanded(
         child: ListView.builder(
             itemCount: _productos.length,
@@ -103,12 +107,13 @@ class _PantallaProductosState extends State<PantallaProductos> {
                   style: const TextStyle(
                       fontWeight: FontWeight.w600, fontSize: 18),
                 ),
-                subtitle: Text("Cantidad : ${producto.cantidad.toString()}      Precio : ${producto.precioVenta.toString()} "),
+                subtitle: Text(
+                    "Cantidad : ${producto.cantidad.toString()}      Precio : ${producto.precioVenta.toString()} "),
                 trailing: IconButton(
                   icon: const Icon(Icons.delete_forever_outlined),
                   onPressed: () => {
                     setState(() {
-                      
+                      confirmDelete(context, producto);
                     })
                   },
                 ),
@@ -122,7 +127,7 @@ class _PantallaProductosState extends State<PantallaProductos> {
         height: 40,
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
         decoration: BoxDecoration(
-            color: const Color(0xff787878),
+            color: Colors.grey,
             borderRadius: BorderRadius.circular(10)),
         child: DropdownButtonHideUnderline(
             child: DropdownButton(
@@ -151,5 +156,81 @@ class _PantallaProductosState extends State<PantallaProductos> {
           alignment: Alignment.center,
           isExpanded: true,
         )));
+  }
+
+  confirmDelete(context, producto) {
+    return showDialog(
+        context: context,
+        builder: ((context) {
+          return AlertDialog(
+            icon: const Icon(
+              Icons.warning_amber_rounded,
+              size: 70,
+            ),
+            iconColor: Colors.red.shade500,
+            backgroundColor: Colors.white,
+            elevation: 24,
+            title: Text("Se eliminara el producto : ${producto.nombre}"),
+            content: const Text(
+              "Esta accion no se puede deshacer ¿Deseas continuar?",
+              textAlign: TextAlign.center,
+            ),
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SizedBox(
+                    width: 120,
+                    height: 50,
+                    child: 
+                    TextButton(
+                    onPressed: () {},
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.green.shade100),
+                    ),
+                    child: const Text(
+                      "Aceptar",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  ),
+
+                  SizedBox(
+                    width: 120,
+                    height: 50,
+                    child: 
+                    TextButton(
+                    onPressed: () {},
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.red.shade100),
+                    ),
+                    child: const Text(
+                      "Cancelar",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  ),
+                  
+                ],
+              ),
+            ],
+          );
+        }));
   }
 }
