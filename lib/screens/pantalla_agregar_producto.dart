@@ -10,6 +10,8 @@ class PantallaAgregarProducto extends StatefulWidget {
 
 class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
   //final _controladorTexto = TextEditingController();
+  final List<String> _categorias = <String>["Ruedas", "Cadenas", "Timones"];
+  String _categoriaSeleccionada = "Ruedas";
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -63,40 +65,58 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
               Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 10.0, vertical: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                          child: TextFormField(
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Ingrese cantidad"),
-                        keyboardType: TextInputType.number,
-                      )),
-                      const SizedBox(width: 50.0),
-                      Expanded(
-                          child: TextFormField(
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Ingrese cantidad"),
-                        keyboardType: TextInputType.number,
-                      )),
-                    ],
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Ingrese cantidad"),
+                    keyboardType: TextInputType.number,
                   )),
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 50, 20, 10),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Colors.red.shade500)),
-                  child: const Text("Agregar"),
-                ),
-              )
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 15.0),
+                  child: Container(
+                    width: 180,
+                    height: 40,
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                    decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: categoriasDropDown(),
+                  )),
+              const SizedBox(
+                height: 16.0,
+              ),
+              ElevatedButton(onPressed: () {}, child: const Text("Guardar"))
             ],
           ),
         ),
       ),
     );
+  }
+
+  DropdownButtonHideUnderline categoriasDropDown() {
+    return DropdownButtonHideUnderline(
+        child: DropdownButton(
+      value: _categoriaSeleccionada,
+      items: _categorias.map((String categoria) {
+        return DropdownMenuItem<String>(
+            value: categoria, child: Text(categoria));
+      }).toList(),
+      onChanged: (filtro) {
+        setState(() {
+          _categoriaSeleccionada = filtro!;
+        });
+      },
+      hint: const Text('Selecciona categoria'),
+      style: const TextStyle(
+        color: Colors.black,
+        fontSize: 12,
+        fontWeight: FontWeight.w600,
+      ),
+      elevation: 8,
+      alignment: Alignment.center,
+      isExpanded: true,
+    ));
   }
 }

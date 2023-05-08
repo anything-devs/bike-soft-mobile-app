@@ -16,13 +16,12 @@ class _ActProductsScreenState extends State<ActProductsScreen> {
   Producto? productoSeleccionado;
   final ControladorProductos _controladorProducto = ControladorProductos();
 
-
   Future<void> _putCantidad() async {
     for (var producto in productos) {
       await _controladorProducto.putProducto(producto);
     }
-    
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,20 +78,14 @@ class _ActProductsScreenState extends State<ActProductsScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Colors.red.shade400,
-        hoverColor: Colors.red.shade300,
-        icon: const Icon(Icons.add_business_outlined, color: Colors.white),
-        label: const Text(
-          "Actualizar Stock",
-          style: TextStyle(fontSize: 15, color: Colors.white),
-        ),
-        onPressed: () =>{
-          _putCantidad(),
-            Navigator.pushNamed(context, '/')
-        }
-            
-
-      ),
+          backgroundColor: Colors.red.shade400,
+          hoverColor: Colors.red.shade300,
+          icon: const Icon(Icons.add_business_outlined, color: Colors.white),
+          label: const Text(
+            "Actualizar Stock",
+            style: TextStyle(fontSize: 15, color: Colors.white),
+          ),
+          onPressed: () => {_putCantidad(), Navigator.pushNamed(context, '/')}),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
@@ -115,27 +108,25 @@ class _ActProductsScreenState extends State<ActProductsScreen> {
                   style: const TextStyle(
                       fontWeight: FontWeight.w600, fontSize: 18),
                 ),
-                subtitle: Expanded(child: TextField(
+                subtitle: Expanded(
+                  child: TextField(
                     keyboardType: TextInputType.number,
-                    decoration:  const InputDecoration(
+                    decoration: const InputDecoration(
                         labelText: 'Nuevas Existencias',
-                        border: UnderlineInputBorder()
-                    ),
+                        border: UnderlineInputBorder()),
                     onSubmitted: (value) {
-                      if(value.isNotEmpty && value != ""){
+                      if (value.isNotEmpty && value != "") {
                         for (var element in productos) {
-                          if(element.nombre == producto.nombre){
-                            element.cantidad += int.parse(value) ;
+                          if (element.nombre == producto.nombre) {
+                            element.cantidad += int.parse(value);
                           }
                         }
                       }
-                        
                     },
-                  
-                  ),),
-
+                  ),
+                ),
                 trailing: IconButton(
-                  icon: Icon(Icons.delete_forever_outlined),
+                  icon: const Icon(Icons.delete_forever_outlined),
                   onPressed: () => {
                     setState(() {
                       productos.remove(producto);
