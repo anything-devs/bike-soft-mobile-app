@@ -38,7 +38,9 @@ class BusquedaProducto extends SearchDelegate<Producto> {
   @override
   Widget buildResults(BuildContext context) {
     if ( query.isEmpty ) {
-      return const ListTile(title: Text('Ingrese un Codigo o Nombre para Realizar la busqueda'));
+      return Container(
+        alignment: Alignment.center,
+        child: const Text('Ingrese el Código o Nombre de un producto existente.'));
     }
 
     final controladorProducto = ControladorProductos();
@@ -60,7 +62,7 @@ class BusquedaProducto extends SearchDelegate<Producto> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return const Text("");
+    return buildResults(context);
     //sugerencias de busqeuda
   }
 

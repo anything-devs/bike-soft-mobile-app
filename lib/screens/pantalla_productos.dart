@@ -2,7 +2,7 @@ import 'package:bike_soft_mobile_app/controllers/controlador_productos.dart';
 import 'package:bike_soft_mobile_app/models/producto.dart';
 import 'package:bike_soft_mobile_app/widgets/custom_app_bar.dart';
 import 'package:bike_soft_mobile_app/widgets/custom_drawer.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:bike_soft_mobile_app/widgets/custom_alert_dialog.dart';
 import 'package:flutter/material.dart';
 
 class PantallaProductos extends StatefulWidget {
@@ -62,7 +62,7 @@ class _PantallaProductosState extends State<PantallaProductos> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBarr(titulo: "Productos", iconoBuscar: false),
-      drawer: const CustomDrawer(),
+      drawer: const CustomDrawer(page: "Productos"),
       body: Column(
         children: [
           Padding(
@@ -170,9 +170,9 @@ class _PantallaProductosState extends State<PantallaProductos> {
             iconColor: Colors.red.shade500,
             backgroundColor: Colors.white,
             elevation: 24,
-            title: Text("Se eliminara el producto : ${producto.nombre}"),
+            title: Text("Se eliminará el producto : ${producto.nombre}"),
             content: const Text(
-              "Esta accion no se puede deshacer ¿Deseas continuar?",
+              "Esta acción no se puede deshacer ¿Deseas continuar?",
               textAlign: TextAlign.center,
             ),
             actions: [
@@ -184,7 +184,21 @@ class _PantallaProductosState extends State<PantallaProductos> {
                     height: 50,
                     child: 
                     TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      showDialog(
+                        context: context,
+                        builder: ((context) {
+                          return const CustomAlertDialog(
+                            titulo: "Accion realizada",
+                            mensaje: "El producto se ha eliminado correctamente",
+                            icono: Icon(
+                              Icons.check_circle_outline_rounded, 
+                              size: 70,),
+                            color: Colors.green,
+                          );
+                        }));
+                    },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
@@ -208,7 +222,9 @@ class _PantallaProductosState extends State<PantallaProductos> {
                     height: 50,
                     child: 
                     TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(

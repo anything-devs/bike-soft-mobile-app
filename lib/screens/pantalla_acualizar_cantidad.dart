@@ -65,7 +65,7 @@ class _ActProductsScreenState extends State<ActProductsScreen> {
           ),
         ],
       ),
-      drawer: const CustomDrawer(),
+      drawer: const CustomDrawer(page: 'Actulizar Productos'),
       body: ListView(
         children: [
           Padding(
