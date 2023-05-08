@@ -31,7 +31,7 @@ class _PantallaProductosState extends State<PantallaProductos> {
   Future<void> _getProductos(String filtro) async {
     _cargando = true;
     _productos = [];
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
     final productos = await _controladorProducto.getProductos(filtro);
     setState(() {
       _productos = productos;
@@ -42,7 +42,7 @@ class _PantallaProductosState extends State<PantallaProductos> {
   Future<void> _getProductosBajasUnidades() async {
     _cargando = true;
     _productos = [];
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
     final productos = await _controladorProducto.getProductosBajasUnidades();
     setState(() {
       _productos = productos;
@@ -83,9 +83,9 @@ class _PantallaProductosState extends State<PantallaProductos> {
           Navigator.pushNamed(context, '/agregarProducto');
         },
         child: const Icon(
-          Icons.add, 
+          Icons.add,
           color: Colors.white,
-          ),
+        ),
       ),
     );
   }
@@ -127,8 +127,7 @@ class _PantallaProductosState extends State<PantallaProductos> {
         height: 40,
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
         decoration: BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.circular(10)),
+            color: Colors.grey, borderRadius: BorderRadius.circular(10)),
         child: DropdownButtonHideUnderline(
             child: DropdownButton(
           value: _dropDownValue,
@@ -182,67 +181,67 @@ class _PantallaProductosState extends State<PantallaProductos> {
                   SizedBox(
                     width: 120,
                     height: 50,
-                    child: 
-                    TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      showDialog(
-                        context: context,
-                        builder: ((context) {
-                          return const CustomAlertDialog(
-                            titulo: "Accion realizada",
-                            mensaje: "El producto se ha eliminado correctamente",
-                            icono: Icon(
-                              Icons.check_circle_outline_rounded, 
-                              size: 70,),
-                            color: Colors.green,
-                          );
-                        }));
-                    },
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        showDialog(
+                            context: context,
+                            builder: ((context) {
+                              return const CustomAlertDialog(
+                                titulo: "Accion realizada",
+                                mensaje:
+                                    "El producto se ha eliminado correctamente",
+                                icono: Icon(
+                                  Icons.check_circle_outline_rounded,
+                                  size: 70,
+                                ),
+                                color: Colors.green,
+                              );
+                            }));
+                      },
+                      style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.green.shade100),
+                      ),
+                      child: const Text(
+                        "Aceptar",
+                        style: TextStyle(
+                          color: Colors.black,
                         ),
                       ),
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.green.shade100),
-                    ),
-                    child: const Text(
-                      "Aceptar",
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
                     ),
                   ),
-                  ),
-
                   SizedBox(
                     width: 120,
                     height: 50,
-                    child: 
-                    TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.red.shade100),
+                      ),
+                      child: const Text(
+                        "Cancelar",
+                        style: TextStyle(
+                          color: Colors.black,
                         ),
                       ),
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.red.shade100),
-                    ),
-                    child: const Text(
-                      "Cancelar",
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
                     ),
                   ),
-                  ),
-                  
                 ],
               ),
             ],
