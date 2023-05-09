@@ -27,7 +27,7 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
             children: <Widget>[
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+                    const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -45,8 +45,15 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
                 ),
               ),
               Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 15),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Codigo del producto'),
+                  )),
+              Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15),
+                    const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15),
                 child: TextFormField(
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -55,7 +62,7 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
               ),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15),
+                    const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15),
                 child: TextFormField(
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), labelText: "Precio base"),
@@ -63,8 +70,8 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
                 ),
               ),
               Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10.0, vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15),
                   child: TextFormField(
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
