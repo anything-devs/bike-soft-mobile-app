@@ -87,10 +87,31 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
               const SizedBox(
                 height: 16.0,
               ),
-              ElevatedButton(onPressed: () {}, child: const Text("Guardar"))
             ],
           ),
         ),
+        floatingActionButton: Align(
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.7,
+                height: 40.0,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0)),
+                      backgroundColor: Colors.red.shade400,
+                      surfaceTintColor: Colors.red.shade300),
+                  child: const Text(
+                    "Guardar",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              )),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
   }
