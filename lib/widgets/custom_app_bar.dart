@@ -1,4 +1,3 @@
-import 'package:bike_soft_mobile_app/models/producto.dart';
 import 'package:bike_soft_mobile_app/service/servicio_notificacion.dart';
 import 'package:flutter/material.dart';
 import 'package:bike_soft_mobile_app/delegate/delegate_busqueda_producto.dart';

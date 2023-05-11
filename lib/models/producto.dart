@@ -27,7 +27,17 @@ class Producto {
         precioVenta: double.parse(json['precio_venta'].toString()),
         cantidad: json['cantidad'],
         cantidadMinima: json['cantidad_minima'],
-        categoriaId: json['cantidad_categoria']);
+        categoriaId: json['categoria_id']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'codigo': codigo,
+      'nombre': nombre,
+      'precio_base': precioBase,
+      'cantidad': cantidad,
+      'categoria_id': categoriaId
+    };
   }
 
   @override
