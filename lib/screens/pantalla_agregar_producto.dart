@@ -1,3 +1,4 @@
+import 'package:bike_soft_mobile_app/controllers/controlador_productos.dart';
 import 'package:bike_soft_mobile_app/models/categoria.dart';
 import 'package:bike_soft_mobile_app/models/producto.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,8 @@ class PantallaAgregarProducto extends StatefulWidget {
 }
 
 class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
+  final _controladorProducto = ControladorProductos();
+  Producto? _producto;
   final _llaveFormulario = GlobalKey<FormState>();
 
   final List<Categoria> _categorias = [
@@ -181,10 +184,11 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
                 width: MediaQuery.of(context).size.width * 0.7,
                 height: 45.0,
                 child: ElevatedButton.icon(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_llaveFormulario.currentState!.validate() &&
                         _categoriaSeleccionada != 0) {
                       _guardarProduto();
+                      _controladorProducto.crearProducto(context, _producto!);
                     } else {
                       setState(() {
                         errorCategoria = "Seleccione una categoria";
@@ -212,20 +216,18 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
   }
 
   // Guardar un nuevo producto
-  void _guardarProduto() {
+  void _guardarProduto() async {
     if (_codigoControlador.text.isNotEmpty &&
         _nombreControlador.text.isNotEmpty &&
         _precioBaseControlador.text.isNotEmpty &&
         _cantidadControlador.text.isNotEmpty &&
         _categoriaSeleccionada != null) {
-      Producto nuevoProducto = Producto(
+      _producto = Producto(
           codigo: _codigoControlador.text,
           nombre: _nombreControlador.text,
           precioBase: double.parse(_precioBaseControlador.text),
           cantidad: int.parse(_cantidadControlador.text),
           categoriaId: _categoriaSeleccionada);
-
-      print(nuevoProducto);
     }
   }
 
