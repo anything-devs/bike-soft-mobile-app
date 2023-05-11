@@ -64,13 +64,23 @@ class ControladorProductos {
         body: jsonEncode({'cantidad': producto.cantidad}));
 
     if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
-    }
+        return true;
+      } else {
+        return false;
+      }
+
   }
 
-  // Funcion para almacenar productos en base de datos
+  
+  Future<bool> deleteProducto(Producto producto) async {
+    var url = Uri.parse("http://10.0.2.2:8080/productoEliminar/${producto.id.toString()}"); 
+      final response = await http.delete(url);
+
+    if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
 
   void crearProducto(BuildContext context, Producto producto) {
     showDialog(

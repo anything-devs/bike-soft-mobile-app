@@ -50,6 +50,45 @@ class _PantallaProductosState extends State<PantallaProductos> {
     });
   }
 
+  Future<Widget> _deleteProducto(producto) async {
+    if (producto.cantidad != 0) {
+      return const CustomAlertDialog(
+        titulo: "No se puede ejecutar la accion",
+        mensaje:
+            "No se pueden eliminar productos que cuenten con unidades en inventario",
+        icono: Icon(
+          Icons.warning_amber_rounded,
+          size: 70,
+        ),
+        color: Colors.red,
+      );
+    }
+
+    final respuesta = await _controladorProducto.deleteProducto(producto);
+    if (respuesta) {
+      return const CustomAlertDialog(
+        titulo: "Accion realizada",
+        mensaje: "El producto se ha eliminado correctamente",
+        icono: Icon(
+          Icons.check_circle_outline_rounded,
+          size: 70,
+        ),
+        color: Colors.green,
+      );
+    } else {
+      return const CustomAlertDialog(
+        titulo: "Error al ejecutar la accion",
+        mensaje:
+            "Ha ocurrido un error a la hora de eliminar este producto, revise su conexión e inténtelo más tarde",
+        icono: Icon(
+          Icons.warning_amber_rounded,
+          size: 70,
+        ),
+        color: Colors.red,
+      );
+    }
+  }
+
   Widget _cargandoProductos() {
     return Expanded(
         child: Container(
@@ -187,16 +226,16 @@ class _PantallaProductosState extends State<PantallaProductos> {
                         showDialog(
                             context: context,
                             builder: ((context) {
-                              return const CustomAlertDialog(
-                                titulo: "Accion realizada",
-                                mensaje:
-                                    "El producto se ha eliminado correctamente",
-                                icono: Icon(
-                                  Icons.check_circle_outline_rounded,
-                                  size: 70,
-                                ),
-                                color: Colors.green,
-                              );
+                              return FutureBuilder(
+                                  future: _deleteProducto(producto),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<Widget> respuesta) {
+                                    if (respuesta.connectionState == ConnectionState.done) {
+                                        return respuesta.data!; 
+                                    } else {
+                                      return const CircularProgressIndicator();
+                                    }
+                                  });
                             }));
                       },
                       style: ButtonStyle(
