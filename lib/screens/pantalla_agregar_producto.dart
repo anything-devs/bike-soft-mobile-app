@@ -1,3 +1,5 @@
+import 'package:bike_soft_mobile_app/models/categoria.dart';
+import 'package:bike_soft_mobile_app/models/producto.dart';
 import 'package:flutter/material.dart';
 
 class PantallaAgregarProducto extends StatefulWidget {
@@ -9,10 +11,32 @@ class PantallaAgregarProducto extends StatefulWidget {
 }
 
 class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
-  //final _controladorTexto = TextEditingController();
   final _llaveFormulario = GlobalKey<FormState>();
-  final List<String> _categorias = <String>["Ruedas", "Cadenas", "Timones"];
-  String _categoriaSeleccionada = "Ruedas";
+
+  final List<Categoria> _categorias = [
+    Categoria(id: 1, nombre: 'Pachas'),
+    Categoria(id: 2, nombre: 'Pedales'),
+    Categoria(id: 3, nombre: 'Timones')
+  ];
+
+  final _codigoControlador = TextEditingController();
+  final _nombreControlador = TextEditingController();
+  final _precioBaseControlador = TextEditingController();
+  final _cantidadControlador = TextEditingController();
+
+  int? _categoriaSeleccionada;
+  String? categoriaSeleccionada;
+  String? errorCategoria;
+
+  @override
+  void dispose() {
+    _codigoControlador.dispose();
+    _nombreControlador.dispose();
+    _precioBaseControlador.dispose();
+    _cantidadControlador.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -25,6 +49,7 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
           body: Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 20.0),
               child: Form(
+                key: _llaveFormulario,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
@@ -52,6 +77,7 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 5.0, vertical: 15),
                       child: TextFormField(
+                        controller: _codigoControlador,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Codigo del producto'),
@@ -63,6 +89,7 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 5.0, vertical: 15),
                       child: TextFormField(
+                        controller: _nombreControlador,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Nombre del producto'),
@@ -74,6 +101,7 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 5.0, vertical: 15),
                       child: TextFormField(
+                        controller: _precioBaseControlador,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Precio base"),
@@ -86,25 +114,59 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 5.0, vertical: 15),
                         child: TextFormField(
+                          controller: _cantidadControlador,
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: "Ingrese cantidad"),
                           keyboardType: TextInputType.number,
                           validator: validarCantidad,
                         )),
+                    // Categoria
                     Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 15.0),
+                      child: Container(
+                        width: 180,
+                        height: 50,
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 15.0),
-                        child: Container(
-                          width: 180,
-                          height: 50,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 4, horizontal: 8),
-                          decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: categoriasDropDown(),
+                            vertical: 4, horizontal: 8),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                color: errorCategoria != null
+                                    ? Colors.red
+                                    : Theme.of(context).colorScheme.primary,
+                                width: 1)),
+                        child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                          value: _categoriaSeleccionada,
+                          items: _categorias.map((Categoria categoria) {
+                            return DropdownMenuItem<int>(
+                                value: categoria.id,
+                                child: Text(categoria.nombre));
+                          }).toList(),
+                          onChanged: (filtro) {
+                            validarCategoria(int.parse(filtro.toString()));
+                            setState(() {});
+                          },
+                          hint: const Text('Selecciona categoria'),
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          elevation: 8,
+                          alignment: Alignment.center,
+                          isExpanded: true,
                         )),
+                      ),
+                    ),
+                    if (errorCategoria != null)
+                      Text(
+                        errorCategoria!,
+                        style: const TextStyle(color: Colors.red),
+                      ),
                     const SizedBox(
                       height: 16.0,
                     ),
@@ -119,7 +181,16 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
                 width: MediaQuery.of(context).size.width * 0.7,
                 height: 45.0,
                 child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (_llaveFormulario.currentState!.validate() &&
+                        _categoriaSeleccionada != 0) {
+                      _guardarProduto();
+                    } else {
+                      setState(() {
+                        errorCategoria = "Seleccione una categoria";
+                      });
+                    }
+                  },
                   icon: const Icon(
                     Icons.save,
                     color: Colors.white,
@@ -140,29 +211,22 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
         ));
   }
 
-  DropdownButtonHideUnderline categoriasDropDown() {
-    return DropdownButtonHideUnderline(
-        child: DropdownButton(
-      value: _categoriaSeleccionada,
-      items: _categorias.map((String categoria) {
-        return DropdownMenuItem<String>(
-            value: categoria, child: Text(categoria));
-      }).toList(),
-      onChanged: (filtro) {
-        setState(() {
-          _categoriaSeleccionada = filtro!;
-        });
-      },
-      hint: const Text('Selecciona categoria'),
-      style: const TextStyle(
-        color: Colors.black,
-        fontSize: 14,
-        fontWeight: FontWeight.w500,
-      ),
-      elevation: 8,
-      alignment: Alignment.center,
-      isExpanded: true,
-    ));
+  // Guardar un nuevo producto
+  void _guardarProduto() {
+    if (_codigoControlador.text.isNotEmpty &&
+        _nombreControlador.text.isNotEmpty &&
+        _precioBaseControlador.text.isNotEmpty &&
+        _cantidadControlador.text.isNotEmpty &&
+        _categoriaSeleccionada != null) {
+      Producto nuevoProducto = Producto(
+          codigo: _codigoControlador.text,
+          nombre: _nombreControlador.text,
+          precioBase: double.parse(_precioBaseControlador.text),
+          cantidad: int.parse(_cantidadControlador.text),
+          categoriaId: _categoriaSeleccionada);
+
+      print(nuevoProducto);
+    }
   }
 
   // Validadores
@@ -202,5 +266,12 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
       return 'Ingrese un cantidad valida';
     }
     return null;
+  }
+
+  void validarCategoria(int filtro) {
+    setState(() {
+      errorCategoria = null;
+      _categoriaSeleccionada = filtro;
+    });
   }
 }

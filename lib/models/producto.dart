@@ -1,20 +1,22 @@
 class Producto {
-  final int id;
+  final int? id;
   final String codigo;
   final String nombre;
   final double precioBase;
-  final double precioVenta;
-   int cantidad;
+  final double? precioVenta;
+  int cantidad;
   final int? cantidadMinima;
+  final int? categoriaId;
 
   Producto(
-      {required this.id,
+      {this.id,
       required this.codigo,
       required this.nombre,
       required this.precioBase,
-      required this.precioVenta,
+      this.precioVenta,
       required this.cantidad,
-      this.cantidadMinima});
+      this.cantidadMinima,
+      this.categoriaId});
 
   factory Producto.fromJson(Map<String, dynamic> json) {
     return Producto(
@@ -24,6 +26,12 @@ class Producto {
         precioBase: double.parse(json['precio_base'].toString()),
         precioVenta: double.parse(json['precio_venta'].toString()),
         cantidad: json['cantidad'],
-        cantidadMinima: json['cantidad_minima']);
+        cantidadMinima: json['cantidad_minima'],
+        categoriaId: json['cantidad_categoria']);
+  }
+
+  @override
+  String toString() {
+    return 'Producto {nombre: $codigo, descripcion: $nombre, precio base: $precioBase, cantidad: $cantidad, categoria: $categoriaId}';
   }
 }
