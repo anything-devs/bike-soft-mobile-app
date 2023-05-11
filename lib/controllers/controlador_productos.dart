@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:bike_soft_mobile_app/models/producto.dart';
 import 'package:http/http.dart' as http;
 
@@ -32,7 +31,7 @@ class ControladorProductos {
   Future<List<Producto>> getProducto(String id) async {
     final regex = RegExp(r'\d');
     bool codigo =  regex.hasMatch(id);
-    var url;
+    Uri url;
     if (codigo){
       url = Uri.parse("http://10.0.2.2:8080/producto?codigo=$id"); 
     }else{
@@ -67,7 +66,19 @@ class ControladorProductos {
     if (response.statusCode == 200) {
         return true;
       } else {
-        print(response);
+        return false;
+      }
+
+  }
+
+  
+  Future<bool> deleteProducto(Producto producto) async {
+    var url = Uri.parse("http://10.0.2.2:8080/productoEliminar/${producto.id.toString()}"); 
+      final response = await http.delete(url);
+
+    if (response.statusCode == 200) {
+        return true;
+      } else {
         return false;
       }
 
