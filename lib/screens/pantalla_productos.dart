@@ -92,8 +92,8 @@ class _PantallaProductosState extends State<PantallaProductos> {
   Widget _cargandoProductos() {
     return Expanded(
         child: Container(
-      alignment: Alignment.center,
-      child: const CircularProgressIndicator(),
+        alignment: Alignment.center,
+        child: const CircularProgressIndicator(),
     ));
   }
 
@@ -222,7 +222,7 @@ class _PantallaProductosState extends State<PantallaProductos> {
                     height: 50,
                     child: TextButton(
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        Navigator.pushNamed(context, '/');
                         showDialog(
                             context: context,
                             builder: ((context) {
@@ -233,7 +233,7 @@ class _PantallaProductosState extends State<PantallaProductos> {
                                     if (respuesta.connectionState == ConnectionState.done) {
                                         return respuesta.data!; 
                                     } else {
-                                      return const CircularProgressIndicator();
+                                      return _cargandoProductos();
                                     }
                                   });
                             }));
