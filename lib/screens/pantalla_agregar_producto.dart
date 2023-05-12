@@ -1,4 +1,5 @@
 import 'package:bike_soft_mobile_app/controllers/controlador_productos.dart';
+import 'package:bike_soft_mobile_app/widgets/custom_alert_dialog.dart';
 import 'package:bike_soft_mobile_app/models/categoria.dart';
 import 'package:bike_soft_mobile_app/models/producto.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,32 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
     _precioBaseControlador.dispose();
     _cantidadControlador.dispose();
     super.dispose();
+  }
+
+  Future<Widget> _crearProducto(producto) async {
+    final respuesta = await _controladorProducto.crearProducto(producto);
+    if (respuesta) {
+      return const CustomAlertDialog(
+        titulo: "Producto creado",
+        mensaje: "Los datos del producto se han guardado correctamente",
+        icono: Icon(
+          Icons.check_circle_outline_rounded,
+          size: 70,
+        ),
+        color: Colors.green,
+      );
+    } else {
+      return const CustomAlertDialog(
+        titulo: "Error al crear el producto",
+        mensaje:
+            "Ha ocurrido un error a la hora de crear este producto, revise su conexión e inténtelo más tarde",
+        icono: Icon(
+          Icons.warning_amber_rounded,
+          size: 70,
+        ),
+        color: Colors.red,
+      );
+    }
   }
 
   @override
@@ -188,7 +215,26 @@ class _PantallaAgregarProductoState extends State<PantallaAgregarProducto> {
                     if (_llaveFormulario.currentState!.validate() &&
                         _categoriaSeleccionada != 0) {
                       _guardarProduto();
-                      _controladorProducto.crearProducto(context, _producto!);
+                      Navigator.pushNamed(context, '/');
+                      showDialog(
+                          context: context,
+                          builder: ((context) {
+                            return FutureBuilder(
+                                future: _crearProducto(_producto),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<Widget> respuesta) {
+                                  if (respuesta.connectionState ==
+                                      ConnectionState.done) {
+                                    return respuesta.data!;
+                                  } else {
+                                    return Expanded(
+                                        child: Container(
+                                        alignment: Alignment.center,
+                                        child: const CircularProgressIndicator(),
+                                    ));
+                                  }
+                                });
+                          }));
                     } else {
                       setState(() {
                         errorCategoria = "Seleccione una categoria";
